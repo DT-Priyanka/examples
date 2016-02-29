@@ -117,7 +117,7 @@ public class Application implements StreamingApplication
 
 
       FSPojoToHiveOperator fsRolling = dag.addOperator("HdfsFileWriter", new FSPojoToHiveOperator());
-      fsRolling.setFilePath("/user/ashwin/hive/");
+      fsRolling.setFilePath("/user/priyanka/hive/");
       fsRolling.setHiveColumns(hiveColumns);
       fsRolling.setHiveColumnDataTypes(fieldtypes);
       fsRolling.setHivePartitionColumnDataTypes(partitiontypes);
