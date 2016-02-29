@@ -3,15 +3,18 @@
  */
 package com.genericdemo.enginedata;
 
-import com.datatorrent.api.Context.OperatorContext;
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.hadoop.conf.Configuration;
+
 import com.datatorrent.api.Context.PortContext;
 import com.datatorrent.api.DAG;
 import com.datatorrent.api.StreamingApplication;
 import com.datatorrent.api.annotation.ApplicationAnnotation;
 import com.datatorrent.contrib.enrichment.FSLoader;
-import com.datatorrent.contrib.enrichment.MapEnrichmentOperator;
-import org.apache.hadoop.conf.Configuration;
-
 import com.datatorrent.contrib.enrichment.POJOEnrichmentOperator;
 import com.datatorrent.contrib.hive.FSPojoToHiveOperator;
 import com.datatorrent.contrib.hive.FSPojoToHiveOperator.FIELD_TYPE;
@@ -19,24 +22,8 @@ import com.datatorrent.contrib.hive.HiveOperator;
 import com.datatorrent.contrib.hive.HiveStore;
 import com.datatorrent.contrib.parser.CsvParser;
 import com.datatorrent.lib.appdata.schemas.SchemaUtils;
-import com.datatorrent.lib.dimensions.DimensionsEvent.Aggregate;
-import com.datatorrent.lib.dimensions.DimensionsEvent.InputEvent;
-import com.datatorrent.lib.io.ConsoleOutputOperator;
-import com.datatorrent.lib.statistics.DimensionsComputationUnifierImpl;
 import com.datatorrent.modules.aggregation.AggregationModule;
 import com.datatorrent.netlet.util.DTThrowable;
-import com.google.common.collect.Maps;
-import com.sun.xml.bind.v2.util.ClassLoaderRetriever;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
 
 @ApplicationAnnotation(name="EngineDataDemo")
 public class Application implements StreamingApplication
@@ -68,7 +55,7 @@ public class Application implements StreamingApplication
       //FileUtils.copyInputStreamToFile(origIs, errorFile);
 
       FSLoader store = new FSLoader();
-      store.setFileName("/user/ashwin/ErrorCodes.txt");
+      store.setFileName("/user/priyanka/ErrorCodes.txt");
 
       enricher.setLookupKeyStr("errorCode");
       enricher.setStore(store);
@@ -98,10 +85,10 @@ public class Application implements StreamingApplication
       //ConsoleOutputOperator console = dag.addOperator("Console", new ConsoleOutputOperator());
 
       HiveStore hiveStore = new HiveStore();
-      hiveStore.setDatabaseUrl("jdbc:hive2://localhost:10000");
+      hiveStore.setDatabaseUrl("jdbc:hive2://node26.morado.com:10000");
       hiveStore.setDatabaseDriver("org.apache.hive.jdbc.HiveDriver");
-      hiveStore.setUserName("ashwin");
-      hiveStore.setFilepath("/user/ashwin/hive/");
+//      hiveStore.setUserName("ashwin");
+      hiveStore.setFilepath("/user/priyanka/hive/");
 
       ArrayList<String> hivePartitionColumns = new ArrayList<String>();
       //hivePartitionColumns.add("model");
