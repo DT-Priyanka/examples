@@ -22,4 +22,3 @@
 | partition         | Shows use of custom partitioning with a stream codec.
 | recordReader      | Shows use of FSRecordReaderModule to read newline delimited records from a file. |
 | topnwords         | The Top-N words example. |
-
